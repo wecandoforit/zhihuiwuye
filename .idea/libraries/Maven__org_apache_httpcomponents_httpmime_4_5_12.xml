@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.httpcomponents:httpmime:4.5.12">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../MAVEN/apache-maven-3.9.0-bin/apache-maven-3.9.0/maven_repository/org/apache/httpcomponents/httpmime/4.5.12/httpmime-4.5.12.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../MAVEN/apache-maven-3.9.0-bin/apache-maven-3.9.0/maven_repository/org/apache/httpcomponents/httpmime/4.5.12/httpmime-4.5.12-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../MAVEN/apache-maven-3.9.0-bin/apache-maven-3.9.0/maven_repository/org/apache/httpcomponents/httpmime/4.5.12/httpmime-4.5.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

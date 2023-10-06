@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="../../css/font.css" th:href="@{/adminStatic/css/font.css}">
+    <link rel="stylesheet" href="../../css/xadmin.css" th:href="@{/adminStatic/css/xadmin.css}">
+    <script th:src="@{/webjars/layui/2.5.6/layui.js}" src="" type="text/javascript"></script>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.js}" src="" type="text/javascript"></script>
+    <script type="text/javascript" src="../../js/xadmin.js" th:src="@{/adminStatic/js/xadmin.js}"></script>
+    <script type="text/javascript" src="../../js/xadmin.js" th:src="@{/adminStatic/js/MyLayuiUtils.js}"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .layui-form-item {
+            margin-bottom: 0;
+        }
+        .layui-form-pane .layui-form-label {
+            max-width: 100px;
+        }
+        .layui-form-item .layui-input-inline {
+            width: 180px;
+        }
+        .layui-form-pane .layui-form-label {
+            padding: 9px 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body " style="padding-bottom: 0;">
+                    <form class="layui-form layui-col-space5 layui-form-pane" id="form">
+                        <!-- 根据渠道名查询 -->
+<!--                        <div class="layui-inline layui-show-xs-block layui-form-item">-->
+<!--                            <label class="layui-form-label">渠道名称</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="channelTypeId" lay-search>-->
+<!--                                    <option value="">选择或输入渠道类型</option>-->
+<!--                                    <option th:value="${item.id}" th:each="item:${channelNames}" th:text="${item.channelName}"></option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; 根据商家名查询 &ndash;&gt;-->
+<!--                        <div class="layui-inline layui-show-xs-block layui-form-item">-->
+<!--                            <label class="layui-form-label">商家名称</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <select name="brandId" lay-search id="brandName" lay-filter="brandName">-->
+<!--                                    <option value="">选择或输入商家名称</option>-->
+<!--                                    <option th:value="${item.id}" th:each="item:${brandNames}" th:text="${item.brandName}"></option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; 根据商品名查询 &ndash;&gt;-->
+<!--                        <div class="layui-inline layui-show-xs-block layui-form-item">-->
+<!--                            <label class="layui-form-label">商品标题名</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input class="layui-input" autocomplete="off" placeholder="商品标题名" name="prizeDesc">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; 中奖时间 &ndash;&gt;-->
+<!--                        <div class="layui-inline layui-show-xs-block layui-form-item">-->
+<!--                            <label class="layui-form-label">采购时间</label>-->
+<!--                            <div class="layui-input-inline" style="width: 150px">-->
+<!--                                <input class="layui-input" autocomplete="off" placeholder="开始时间" name="start"-->
+<!--                                       id="start">-->
+<!--                            </div>-->
+<!--                            <div class="layui-input-inline" style="width: 150px">-->
+<!--                                <input class="layui-input" autocomplete="off" placeholder="结束时间" name="end" id="end">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="layui-inline layui-show-xs-block">-->
+<!--                            <button class="layui-btn layui-btn-normal" id="searchBtn" type="button" lay-filter="sreach">-->
+<!--                                <i class="layui-icon">&#xe615;</i>-->
+<!--                            </button>-->
+<!--                            <input class="layui-btn layui-btn-normal layui-icon" type="reset" value="&#xe669;"/>-->
+<!--                        </div>-->
+                    </form>
+                </div>
+                <div class="layui-card-body ">
+                    <table id="listInfo" lay-filter="listInfo"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script id="toolbarDemo" type="text/html">
+    <button class="layui-btn layui-btn-sm iconfont layui-btn-danger" lay-event="del">&#xe69d; 删除</button>
+</script>
+<script id="solveTemp" type="text/html">
+
+    {{# if(d.isSolve == 0){}}
+        <a class="layui-btn layui-btn-sm layui-btn-danger">未处理</a>
+    {{# }}}
+
+    {{# if(d.isSolve == 1){}}
+        <a class="layui-btn layui-btn-sm">已处理</a>
+    {{# }}}
+</script>
+
+<script id="operationBar" type="text/html">
+
+    {{# if(d.isSolve == 0){}}
+        <a class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">立即处理</a>
+    {{# }}}
+</script>
+
+<script>
+    layui.use(['table','form', 'upload', 'laydate'],
+        function () {
+            var table = layui.table,
+                layer = layui.layer,
+                form = layui.form,
+                upload = layui.upload,
+                laydate = layui.laydate;
+
+            loadFunction("getDataByPage")
+            /**
+             * 绑定查询按钮
+             */
+            $("#searchBtn").click(function() {
+                // 获取表单数据
+                var sendData = $("#form").serialize();
+                // 重新调用表格加载方法
+                loadFunction("getDataByPage?" + sendData)
+            })
+
+            /**
+             * 加载表格方法
+             * @param url
+             */
+            function loadFunction(url) {
+                //第一个实例
+                table.render({
+                    elem: '#listInfo'
+                    , height: 'full-75'
+                    , url: url //数据接口
+                    , defaultToolbar: ['filter']
+                    , loading: true
+                    , limit: 20
+                    , title: '渠道信息'
+                    , toolbar: '#toolbarDemo'
+                    , page: {
+                        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip', 'refresh'] //自定义分页布局
+                        ,groups: 5 //只显示 5 个连续页码
+                        ,theme: '#1E9FFF'
+                    }
+                    , cols:
+                        [
+                            [ //表头
+                                {type: 'checkbox',fixed: 'left', unresize: true}
+                                , { type: 'numbers', title: '序号', width: 60  }
+                                , {field: 'id', title: '主键标识', width: 120, hide: true}
+                                , {field: 'userName', title: '业主姓名'}
+                                , {field: 'phone', title: '联系电话'}
+                                , {field: 'complaintInfo', title: '投诉信息'}
+                                , {field: 'createDate', title: '投诉时间'}
+                                , {field: 'isSolve', title: '是否处理', templet: "#solveTemp"}
+                                , {field: 'caozuo', title: '操作', toolbar:'#operationBar'}
+                            ]
+                        ]
+                })
+            }
+
+            //头工具栏事件
+            table.on('toolbar(listInfo)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                var data = checkStatus.data;
+                var selectCount = data.length;      //获取选中行
+                var dataId = getIds(data);          //data是选中的所有数据，得到的是一个数组，将这个数组传入getIds方法进行处理
+                switch (obj.event) {
+                    case 'del':
+                        // 删除重要信息
+                        deleteInfo(selectCount, dataId, "deleteInfo?ids=" + dataId);
+                        break;
+                }
+            });
+
+            //行内工具条
+            table.on('tool(listInfo)', function(obj){
+                switch(obj.event){
+                    case 'edit':
+                        //调用异步方法
+                        $.getJSON(
+                            "updateInfo?id="+obj.data.id,
+                            function (res) {
+                                if (res.code == 0) {
+                                    layer.confirm(res.msg, {
+                                        btn: ['确定'] //按钮
+                                        , icon: 6
+                                    }, function () {
+                                        window.location.reload();
+                                    })
+                                } else {
+                                    layer.confirm(res.msg, {
+                                        btn: ['确定'] //按钮
+                                        , icon: 5
+                                        , anim: 6
+                                    })
+                                }
+                            }
+                        )
+                        break;
+                }
+            });
+        });
+</script>
+</html>
